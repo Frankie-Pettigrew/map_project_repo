@@ -1,29 +1,73 @@
+const key = 'pk.eyJ1IjoiZnJhbmtpZXBwIiwiYSI6ImNqejBmaGkyczBieHgzY3ZwM2s2dWZ2YXAifQ.ZtGh3ZnCQ8V7ONxzHXvAag';
 
+// Options for map
+let options = {
+  lat: 39.833333,
+  lng: -98.583333,
+  zoom: 4,
+  studio: true, // false to use non studio styles
+  //style: 'mapbox.dark' //streets, outdoors, light, dark, satellite (for nonstudio)
+  style: 'mapbox://styles/frankiepp/cjz3bo46y8b5q1cqm68njrxol',
+};
+
+// Create an instance of Mapbox
+const mappa = new Mappa('Mapbox', key);
 let myMap;
-let canvas;
-const mappa = new Mappa('Leaflet');
+let ells = [];
+let tmps = [];
+let pops = [];
 
-const options = {
-    lat: 0,
-    lng: 0,
-    zoom: 1.5,
-    style: "http://{s}.tile.osm.org/{z}/{x}/{y}.png"
-  }
+let canvas;
 
 function setup(){
-   canvas =  createCanvas(640, 640);
-//    background(100);
-
-  // Create a tile map with lat 0, lng 0, zoom 4
-  myMap = mappa.tileMap(options); 
-  // Overlay the canvas over the tile map
-  myMap.overlay(canvas);
-
+  newMap(options.lat,options.lng,4);
 }
 
 function draw(){
-  // takes lat and long of the country nigeria and then converts it into a 2D vector.
-  const nigeria = myMap.latLngToPixel(11.396396,5.076543);
   clear();
-  ellipse(nigeria.x, nigeria.y, 50, 50);
+  for(i=0;i<ells.length;i++){
+    let pixCoord = myMap.latLngToPixel(ells[i].lt,ells[i].ln);
+    let nuPop = ells[i].pop * 0.000001;
+    // console.log(nuPop * 0.000001);
+    let nuCol = 
+    ellipse(pixCoord.x, pixCoord.y, nuPop);
+  }
+}
+
+
+function newMap(latt,long,zm){
+  console.log("Made new Map");
+  let newOptions = {
+    lat: latt,
+    lng: long,
+    zoom: zm,
+    studio: true, // false to use non studio styles
+    //style: 'mapbox.dark' //streets, outdoors, light, dark, satellite (for nonstudio)
+    style: 'mapbox://styles/frankiepp/cjz3bo46y8b5q1cqm68njrxol',
+  };
+  canvas = createCanvas(screen.width, screen.height/2);
+  myMap = mappa.tileMap(newOptions);
+  myMap.zoom
+  myMap.overlay(canvas);
+}
+
+function newEllipse(lat,long,state){
+
+  function fnSt(val){
+    return val[0] === state;
+  }
+  newST = census["2017"].find(fnSt);
+  console.log(newST);
+
+  let newObj = {
+    lt: lat,
+    ln: long,
+    pop: newST[1]
+  };
+  
+  ells.push(newObj);
+}
+
+function newTemp(){
+
 }

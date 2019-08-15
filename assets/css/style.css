@@ -1,0 +1,19 @@
+#search_bar{
+    float: left;
+    margin: 25px;
+    /* margin-top: 50px; */
+}
+
+#myBtn{
+    margin-top: 50px;
+    float: left;
+}
+
+.table {
+    width: 46%;
+}
+
+#bar{
+  margin-top: 50px; 
+}
+
