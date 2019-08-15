@@ -21,6 +21,11 @@
         var latitude = ""
         var longitude = ""
 
+        let newObj = {
+            old: 0,
+            nu:0
+        };
+
 
         // When clicking the search button, call Google's Geocoding API to translate city, state to latitude/longitude.
         $("#myBtn").on("click", function () {
@@ -53,9 +58,9 @@
                     // Dark sky API needs lat/long to search for locations.
                     latitude = response.results[0].geometry.location.lat;
                     longitude = response.results[0].geometry.location.lng;
-                    console.log(response);
+                    // console.log(response);
 
-                    console.log(response.results[0].address_components[2].long_name);
+                    // console.log(response.results[0].address_components[2].long_name);
 
                     state = response.results[0].address_components[2].long_name;
 
@@ -88,6 +93,7 @@
                 $("#oldLocation").text(loc)
                 $("#oldLowTemp").text(lowTemp)
                 $("#oldHighTemp").text(highTemp)
+                newObj.old = highTemp;
 
             });
         }
@@ -108,6 +114,7 @@
                 $("#newLocation").text(loc)
                 $("#newLowTemp").text(lowTemp)
                 $("#newHighTemp").text(highTemp)
-
+                newObj.nu = highTemp;
+                newTemp(newObj);
             });
         }

@@ -12,26 +12,26 @@ $.ajax({
   method: 'GET'
 }).then(function(data) {
   json = $.parseJSON(data);
-  console.log(json);
+  // console.log(json);
   states = $.makeArray(json);
-  console.log(states);
+  // console.log(states);
 
 })
 
 for (let i = 0; i < year.length; i++) {
 
 let queryURL = baseURL + year[i] + dataURL + censusAPI
-console.log(queryURL);
+// console.log(queryURL);
 
 $.ajax({
   url: queryURL,
   method: 'GET'
 }).then(function(response) {
-  console.log(response)
+  // console.log(response)
 census[year[i]] = response;
 
  }
 );
 
 }
-console.log(census);
+// console.log(census);

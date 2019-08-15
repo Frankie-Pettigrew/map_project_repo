@@ -10,12 +10,12 @@ let options = {
   style: 'mapbox://styles/frankiepp/cjz3bo46y8b5q1cqm68njrxol',
 };
 
+
 // Create an instance of Mapbox
 const mappa = new Mappa('Mapbox', key);
 let myMap;
 let ells = [];
 let tmps = [];
-let pops = [];
 
 let canvas;
 
@@ -29,8 +29,20 @@ function draw(){
     let pixCoord = myMap.latLngToPixel(ells[i].lt,ells[i].ln);
     let nuPop = ells[i].pop * 0.000001;
     // console.log(nuPop * 0.000001);
-    let nuCol = 
-    ellipse(pixCoord.x, pixCoord.y, nuPop);
+    let mapVal = Math.floor(tmps[i]);
+    if(mapVal >= 0){
+    let nuVal = map(mapVal,-20,20,0,255);
+    // console.log(mapVal);
+    let nuCol = color(nuVal,0,0,127);
+    fill(nuCol);
+    } else {
+      let nuVal = map(mapVal,-20,20,0,255);
+    // console.log(mapVal);
+    let nuCol = color(0,0,nuVal,127);
+    fill(nuCol);
+    }
+    noStroke();
+    ellipse(pixCoord.x, pixCoord.y, nuPop * 10);
   }
 }
 
@@ -68,6 +80,8 @@ function newEllipse(lat,long,state){
   ells.push(newObj);
 }
 
-function newTemp(){
-
+function newTemp(obj){
+  let delt = obj.nu - obj.old;
+  // console.log(delt);
+  tmps.push(delt);
 }
